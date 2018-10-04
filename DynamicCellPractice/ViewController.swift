@@ -8,19 +8,28 @@
 
 import UIKit
 
+struct ChatMessage {
+  let message: String
+  let isIncoming: Bool
+}
+
 class ViewController: UITableViewController {
   
-  private let messages = [
-    "aaaaaaaaaa",
-    "bbbbbbbbfdsfdsfdsfdsfdsfdfdsfdsfdsfdsfdsfdsfdsfdsfdsfdsfdsfdsfdsfdsfdsfdsfdsf",
-    "djdj kdkdjdkd kdkdjdjd kdkdjdkdkd kdkdkdkd kdkdkdkdkd kdkdkdkd kdkdkdkdkd kdkdkdkdkd kdkdkdk",
-    "dkvbljkdflksdjf;l"
+  private let messages: [ChatMessage] = [
+    ChatMessage(message: "aaaaaaaaaa", isIncoming: true),
+    ChatMessage(message: "bbbbbbbbfdsfdsfdsfdsfdsfdfdsfdsfdsfdsfdsfdsfdsfdsfdsfdsfdsfdsfdsfdsfdsfdsfdsf", isIncoming: true),
+    ChatMessage(message: "djdj kdkdjdkd kdkdjdjd kdkdjdkdkd kdkdkdkd kdkdkdkdkd kdkdkdkd kdkdkdkdkd kdkdkdkdkd kdkdkdk", isIncoming: false),
+    ChatMessage(message: "dkvbljkdflksdjf", isIncoming: true),
+    ChatMessage(message: "wow", isIncoming: false),
+    ChatMessage(message: "aaa bbbbbb cccccc dddddd  eeeee fffffff ggggggg hhhhhhh  iiiiiiiiii", isIncoming: false),
+    ChatMessage(message: "igjsljfkljsdjf", isIncoming: true)
   ]
 
   override func viewDidLoad() {
     super.viewDidLoad()
     tableView.separatorStyle = .none
     tableView.register(DynamicCell.self, forCellReuseIdentifier: DynamicCell.cellId)
+    tableView.backgroundColor = UIColor(white: 0.95, alpha: 1)
   }
   
   override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
