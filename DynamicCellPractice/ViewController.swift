@@ -44,25 +44,44 @@ extension Date {
 
 class ViewController: UITableViewController {
   
-  private let messages = [
-    [
-      ChatMessage(message: "aaaaaaaaaa", isIncoming: true, date: Date.dateFromCustomString(str: "10/03/2018")),
-      ChatMessage(message: "bbbbbbbbfdsfdsfdsfdsfdsfdfdsfdsfdsfdsfdsfdsfdsfdsfdsfdsfdsfdsfdsfdsfdsfdsfdsf", isIncoming: true, date: Date.dateFromCustomString(str: "10/03/2018")),
-      ChatMessage(message: "djdj kdkdjdkd kdkdjdjd kdkdjdkdkd kdkdkdkd kdkdkdkdkd kdkdkdkd kdkdkdkdkd kdkdkdkdkd kdkdkdk", isIncoming: false, date: Date.dateFromCustomString(str: "10/03/2018"))
-    ],
-    [
-      ChatMessage(message: "dkvbljkdflksdjf", isIncoming: true, date: Date.dateFromCustomString(str: "10/04/2018")),
-      ChatMessage(message: "wow", isIncoming: false, date: Date.dateFromCustomString(str: "10/04/2018")),
-      ChatMessage(message: "aaa bbbbbb cccccc dddddd  eeeee fffffff ggggggg hhhhhhh  iiiiiiiiii", isIncoming: false, date: Date.dateFromCustomString(str: "10/04/2018")),
-      ChatMessage(message: "igjsljfkljsdjf", isIncoming: true, date: Date.dateFromCustomString(str: "10/04/2018"))
-    ]
+  private var messages = [[ChatMessage]]()
+  
+  private let messagesFromServer = [
+    ChatMessage(message: "aaaaaaaaaa", isIncoming: true, date: Date.dateFromCustomString(str: "10/03/2018")),
+    ChatMessage(message: "bbbbbbbbfdsfdsfdsfdsfdsfdfdsfdsfdsfdsfdsfdsfdsfdsfdsfdsfdsfdsfdsfdsfdsfdsfdsf", isIncoming: true, date: Date.dateFromCustomString(str: "10/03/2018")),
+    ChatMessage(message: "djdj kdkdjdkd kdkdjdjd kdkdjdkdkd kdkdkdkd kdkdkdkdkd kdkdkdkd kdkdkdkdkd kdkdkdkdkd kdkdkdk", isIncoming: false, date: Date.dateFromCustomString(str: "10/03/2018")),
+    ChatMessage(message: "dkvbljkdflksdjf", isIncoming: true, date: Date.dateFromCustomString(str: "10/04/2018")),
+    ChatMessage(message: "wow", isIncoming: false, date: Date.dateFromCustomString(str: "10/04/2018")),
+    ChatMessage(message: "aaa bbbbbb cccccc dddddd  eeeee fffffff ggggggg hhhhhhh  iiiiiiiiii", isIncoming: false, date: Date.dateFromCustomString(str: "10/04/2018")),
+    ChatMessage(message: "이놈아 이놈시키", isIncoming: true, date: Date.dateFromCustomString(str: "10/04/2018")),
+    ChatMessage(message: "헐 bbbbbb cccccc dddddd  eeeee fffffff ggggggg hhhhhhh  iiiiiiiiii", isIncoming: false, date: Date.dateFromCustomString(str: "10/06/2018")),
+    ChatMessage(message: "왜요", isIncoming: true, date: Date.dateFromCustomString(str: "10/06/2018")),
+    ChatMessage(message: "얍", isIncoming: false, date: Date.dateFromCustomString(str: "10/07/2018")),
+    ChatMessage(message: "그냥", isIncoming: true, date: Date.dateFromCustomString(str: "10/07/2018"))
   ]
 
   override func viewDidLoad() {
     super.viewDidLoad()
+
     tableView.separatorStyle = .none
     tableView.register(DynamicCell.self, forCellReuseIdentifier: DynamicCell.cellId)
     tableView.backgroundColor = UIColor(white: 0.95, alpha: 1)
+    
+    assembleGroupedMessagesByDate()
+  }
+  
+  private func assembleGroupedMessagesByDate() {
+    print("attempt to assemble grouped messages")
+    
+    let dictByDate = Dictionary(grouping: messagesFromServer) { (element) -> Date in
+      return element.date
+    }
+    
+    let sortedKeys = dictByDate.keys.sorted()
+    sortedKeys.forEach { key in
+      messages.append(dictByDate[key] ?? [])
+    }
+    
   }
   
   override func numberOfSections(in tableView: UITableView) -> Int {
